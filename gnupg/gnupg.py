@@ -181,7 +181,7 @@ class GPG(object):
             assert self.gpghome is not None, "Got None for self.gpghome"
             assert _util._has_readwrite(self.gpghome), ("Home dir %s needs r+w"
                                                        % self.gpghome)
-            assert self.gpgbinary, "Could not find gpgbinary %s" % full
+            assert self.gpgbinary, "Could not find a suitable gpgbinary"
             assert isinstance(verbose, bool), "'verbose' must be boolean"
             assert isinstance(use_agent, bool), "'use_agent' must be boolean"
             if self.options:
