@@ -276,6 +276,7 @@ def _is_allowed(input):
          '--list-secret-keys', '--list-public-keys',
          '--list-packets',  '--with-colons',
          '--list-options',
+         '--no-options',
          '--delete-keys', '--delete-secret-keys',
          '--encrypt', '--encrypt-files',
          '--decrypt', '--decrypt-files',

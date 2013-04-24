@@ -213,7 +213,7 @@ class GPGTestCase(unittest.TestCase):
         self.gpg.keyring = self.secring
         cmd = self.gpg._make_args(None, False)
         expected = ['/usr/bin/gpg',
-                    '--status-fd 2 --no-tty',
+                    '--status-fd 2 --no-tty --no-options',
                     '--homedir "%s"' % HOME_DIR,
                     '--no-default-keyring --keyring %s' % self.pubring,
                     '--secret-keyring %s' % self.secring]
