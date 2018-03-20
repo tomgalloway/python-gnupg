@@ -551,7 +551,10 @@ class GPGBase(object):
         if self.secring:
             cmd.append('--secret-keyring %s' % self.secring)
 
-        if passphrase: cmd.append('--batch --passphrase-fd 0')
+        if passphrase:
+            cmd.append('--batch --passphrase-fd 0')
+            if self.is_gpg2():
+                cmd.append('--pinentry-mode loopback')
 
         if self.use_agent is True: cmd.append('--use-agent')
         elif self.use_agent is False: cmd.append('--no-use-agent')

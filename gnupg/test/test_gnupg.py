@@ -379,6 +379,24 @@ class GPGTestCase(unittest.TestCase):
                     '--trust-model always']
         self.assertListEqual(cmd, expected)
 
+    @patch('gnupg._util._version_from_list_config', return_value='1.2.3')
+    def test_make_args_drop_protected_options_with_passphrase_gpg_v1(self, td):
+        """Test that unsupported gpg options are dropped, and supported ones remain."""
+        self.setUp()
+        self.gpg.options = ['--tyrannosaurus-rex', '--stegosaurus', '--lock-never', '--trust-model always']
+        gpg_binary_path = _util._find_binary('gpg')
+        cmd = self.gpg._make_args(None, True)
+        expected = [gpg_binary_path,
+                    '--no-options --no-emit-version --no-tty --status-fd 2',
+                    '--homedir "%s"' % self.homedir,
+                    '--no-default-keyring --keyring %s' % self.keyring,
+                    '--secret-keyring %s' % self.secring,
+                    '--batch --passphrase-fd 0',
+                    '--no-use-agent',
+                    '--lock-never',
+                    '--trust-model always']
+        self.assertListEqual(cmd, expected)
+
     @patch('gnupg._util._version_from_list_config', return_value='2.3.4')
     def test_make_args_drop_protected_options_gpg_v2(self, td):
         """Test that unsupported gpg options are dropped, and supported ones remain."""
@@ -391,6 +409,24 @@ class GPGTestCase(unittest.TestCase):
                     '--homedir "%s"' % self.homedir,
                     '--no-default-keyring --keyring %s' % self.keyring,
                     '--secret-keyring %s' % self.secring,
+                    '--lock-never',
+                    '--trust-model always']
+        self.assertListEqual(cmd, expected)
+
+    @patch('gnupg._util._version_from_list_config', return_value='2.3.4')
+    def test_make_args_drop_protected_options_with_passphrase_gpg_v2(self, td):
+        """Test that unsupported gpg options are dropped, and supported ones remain."""
+        self.setUp()
+        self.gpg.options = ['--tyrannosaurus-rex', '--stegosaurus', '--lock-never', '--trust-model always']
+        gpg_binary_path = _util._find_binary('gpg')
+        cmd = self.gpg._make_args(None, True)
+        expected = [gpg_binary_path,
+                    '--no-options --no-emit-version --no-tty --status-fd 2',
+                    '--homedir "%s"' % self.homedir,
+                    '--no-default-keyring --keyring %s' % self.keyring,
+                    '--secret-keyring %s' % self.secring,
+                    '--batch --passphrase-fd 0',
+                    '--pinentry-mode loopback',
                     '--lock-never',
                     '--trust-model always']
         self.assertListEqual(cmd, expected)
@@ -1640,7 +1676,9 @@ suites = { 'parsers': set(['test_parsers_fix_unsafe',
                          'test_list_keys_initial_public',
                          'test_list_keys_initial_secret',
                          'test_make_args_drop_protected_options_gpg_v1',
+                         'test_make_args_drop_protected_options_with_passphrase_gpg_v1',
                          'test_make_args_drop_protected_options_gpg_v2',
+                         'test_make_args_drop_protected_options_with_passphrase_gpg_v2',
                          'test_make_args']),
            'genkey': set(['test_gen_key_input',
                           'test_rsa_key_generation',

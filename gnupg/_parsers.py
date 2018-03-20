@@ -1501,7 +1501,10 @@ class Verify(object):
             ):
             pass
         elif key == "KEY_CONSIDERED":
-            self.status = '\n'.join([self.status, "key considered"])
+            if self.status is None:
+                self.status = 'key considered'
+            else:
+                self.status = '\n'.join([self.status, "key considered"])
         elif key == "NEWSIG":
             # Reset
             self.status = None
