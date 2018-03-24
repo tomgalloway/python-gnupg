@@ -1,14 +1,12 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
+  # - "2.6"
+  # - "2.7"
   - "3.3"
-  - "3.4"
+  # - "3.4"
   # PyPy versions
-  - "pypy2.7"
-  - "pypy3.5"
-env:
-  - USERNAME=travis
+  # - "pypy2.7"
+  # - "pypy3.5"
 # command to install dependencies
 install:
   - python setup.py install
