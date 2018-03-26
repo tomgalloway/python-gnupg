@@ -54,16 +54,7 @@ test-before: cleanup-src cleanup-tests
 
 test-run: test-before
 	python $(TESTHANDLE) \
-		basic \
-		encodings \
-		parsers \
-		keyrings \
-		listkeys \
-		genkey \
-		sign \
-		crypt \
-		expiration \
-		signing
+		basic
 
 py3k-test-run: test-before
 	python3 $(TESTHANDLE) \
@@ -125,7 +116,7 @@ coverage: coverage-run coverage-report coverage-html clean-test
 
 py3k-coverage: py3k-coverage-run coverage-report coverage-html clean-test
 
-install: 
+install:
 	python setup.py install --record installed-files.txt
 py3k-install:
 	python3 setup.py install --record installed-files.txt
