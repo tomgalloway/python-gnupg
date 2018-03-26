@@ -57,7 +57,8 @@ test-run: test-before
 		basic \
 		encodings \
 		parsers \
-		keyrings
+		keyrings \
+		listkeys
 
 py3k-test-run: test-before
 	python3 $(TESTHANDLE) \
