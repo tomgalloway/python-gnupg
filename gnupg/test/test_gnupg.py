@@ -1328,38 +1328,18 @@ boolean circuit causes a considerable overhead."""
     def test_encryption_decryption_multi_recipient(self):
         """Test decryption of an encrypted string for multiple users"""
 
-        alice = open(os.path.join(_files, 'test_key_1.pub'))
-        alice_pub = alice.read()
-        alice_public = self.gpg.import_keys(alice_pub)
-        res = alice_public.results[-1:][0]
-        alice_pfpr = str(res['fingerprint'])
-        alice.close()
+        key = self.generate_key("Alice", "python-gnupg", passphrase="alice_test")
+        alice_fpr = key.fingerprint
+        alice = self.gpg.export_keys(key.fingerprint)
+        self.gpg.import_keys(alice)
 
-        alice = open(os.path.join(_files, 'test_key_1.sec'))
-        alice_priv = alice.read()
-        alice_private = self.gpg.import_keys(alice_priv)
-        res = alice_private.results[-1:][0]
-        alice_sfpr = str(res['fingerprint'])
-        alice.close()
+        key = self.generate_key("Bob", "python-gnupg", passphrase="bob_test")
+        bob_fpr = key.fingerprint
+        bob = self.gpg.export_keys(key.fingerprint)
+        self.gpg.import_keys(bob)
 
-        bob = open(os.path.join(_files, 'test_key_2.pub'))
-        bob_pub = bob.read()
-        bob_public = self.gpg.import_keys(bob_pub)
-        res = bob_public.results[-1:][0]
-        bob_pfpr = str(res['fingerprint'])
-        bob.close()
-
-        bob = open(os.path.join(_files, 'test_key_2.sec'))
-        bob_priv = bob.read()
-        bob_private = self.gpg.import_keys(bob_priv)
-        res = bob_public.results[-1:][0]
-        bob_sfpr = str(res['fingerprint'])
-        bob.close()
-
-        log.debug("alice public fpr: %s" % alice_pfpr)
-        log.debug("alice public fpr: %s" % alice_sfpr)
-        log.debug("bob public fpr: %s" % bob_pfpr)
-        log.debug("bob public fpr: %s" % bob_sfpr)
+        log.debug("alice public fpr: %s" % alice_fpr)
+        log.debug("bob public fpr: %s" % bob_fpr)
 
         message = """
 In 2010 Riggio and Sicari presented a practical application of homomorphic
@@ -1368,16 +1348,16 @@ transparent multi-hop wireless backhauls that are able to perform statistical
 analysis of different kinds of data (temperature, humidity, etc.)  coming from
 a WSN while ensuring both end-to-end encryption and hop-by-hop
 authentication."""
-        enc = self.gpg.encrypt(message, alice_pfpr, bob_pfpr)
+        enc = self.gpg.encrypt(message, alice_fpr, bob_fpr)
         encrypted = str(enc)
         log.debug("encryption_decryption_multi_recipient() Ciphertext = %s"
                   % encrypted)
 
         self.assertNotEquals(message, encrypted)
-        dec_alice = self.gpg.decrypt(encrypted, passphrase="test")
+        dec_alice = self.gpg.decrypt(encrypted, passphrase="alice_test")
 
         self.assertEquals(message, str(dec_alice))
-        dec_bob = self.gpg.decrypt(encrypted, passphrase="test")
+        dec_bob = self.gpg.decrypt(encrypted, passphrase="bob_test")
         self.assertEquals(message, str(dec_bob))
 
     def test_symmetric_encryption_and_decryption(self):
