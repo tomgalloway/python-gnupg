@@ -59,7 +59,8 @@ test-run: test-before
 		parsers \
 		keyrings \
 		listkeys \
-		genkey
+		genkey \
+		sign
 
 py3k-test-run: test-before
 	python3 $(TESTHANDLE) \
