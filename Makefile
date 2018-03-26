@@ -55,7 +55,8 @@ test-before: cleanup-src cleanup-tests
 test-run: test-before
 	python $(TESTHANDLE) \
 		basic \
-		encodings
+		encodings \
+		parsers
 
 py3k-test-run: test-before
 	python3 $(TESTHANDLE) \
