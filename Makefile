@@ -60,7 +60,8 @@ test-run: test-before
 		keyrings \
 		listkeys \
 		genkey \
-		sign
+		sign \
+		crypt
 
 py3k-test-run: test-before
 	python3 $(TESTHANDLE) \
