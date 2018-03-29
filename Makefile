@@ -61,7 +61,8 @@ test-run: test-before
 	listkeys \
 	genkey \
 	sign \
-	crypt
+	crypt \
+	expiration
 
 py3k-test-run: test-before
 	python3 $(TESTHANDLE) \
