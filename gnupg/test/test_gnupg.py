@@ -1548,10 +1548,12 @@ know, maybe you shouldn't be doing it in the first place.
         tomorrow = today + datetime.timedelta(days=1)
         key = self.generate_key("Haha", "ho.ho", passphrase="haha.hehe", expire_date=tomorrow.strftime(date_format))
 
-        self.gpg.expire(key.fingerprint, expiration_time='1w', passphrase="wrong passphrase")
+        self.gpg.expire(key.fingerprint, expiration_time='1w', passphrase="haha.hehe")
 
         current_keys = self.gpg.list_keys()
         for fecthed_key in current_keys:
+            log.debug("s - %s" % fecthed_key)
+            log.debug("t - %s" % datetime.date.fromtimestamp(int(fecthed_key['expires'])))
             self.assertEqual(tomorrow, datetime.date.fromtimestamp(int(fecthed_key['expires'])))
             self.assertEqual(key.fingerprint, fecthed_key['fingerprint'])
 
