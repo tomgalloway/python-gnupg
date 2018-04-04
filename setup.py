@@ -81,7 +81,7 @@ def get_requirements():
 
     if python26():
         # Required to make `collections.OrderedDict` available on Python<=2.6
-        requirements.append('ordereddict==1.1#a0ed854ee442051b249bfad0f638bbec')
+        requirements.append('ordereddict==1.1')
 
     # Don't try to install psutil on PyPy:
     if _isPyPy:
