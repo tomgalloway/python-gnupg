@@ -1552,8 +1552,6 @@ know, maybe you shouldn't be doing it in the first place.
 
         current_keys = self.gpg.list_keys()
         for fecthed_key in current_keys:
-            log.debug("s - %s" % fecthed_key)
-            log.debug("t - %s" % datetime.date.fromtimestamp(int(fecthed_key['expires'])))
             self.assertEqual(tomorrow, datetime.date.fromtimestamp(int(fecthed_key['expires'])))
             self.assertEqual(key.fingerprint, fecthed_key['fingerprint'])
 

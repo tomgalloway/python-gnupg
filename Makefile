@@ -54,6 +54,14 @@ test-before: cleanup-src cleanup-tests
 
 test-run: test-before
 	python $(TESTHANDLE) \
+	basic \
+	encodings \
+	parsers \
+	keyrings \
+	listkeys \
+	genkey \
+	sign \
+	crypt \
 	expiration
 
 py3k-test-run: test-before
