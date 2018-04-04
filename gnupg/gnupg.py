@@ -625,11 +625,8 @@ class GPG(GPGBase):
         expiration_input = KeyExpirationInterface(expiration_time, passphrase).gpg_interactive_input(sub_keys_number)
 
         args = ["--command-fd 0", "--edit-key %s" % keyid]
-        p = self._open_subprocess(args)
-        p.stdin.write(expiration_input)
-
         result = self._result_map['expire'](self)
-        self._collect_output(p, result, stdin=p.stdin)
+        self._handle_io(args, expiration_input, result, passphrase)
         return result
 
     def gen_key(self, input):
