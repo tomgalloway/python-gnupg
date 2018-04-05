@@ -598,7 +598,7 @@ class GPGBase(object):
         """
         ## see http://docs.python.org/2/library/subprocess.html#converting-an\
         ##    -argument-sequence-to-a-string-on-windows
-        cmd = shlex.split(' '.join(self._make_args(args, passphrase)).encode('ascii'))
+        cmd = shlex.split(' '.join(self._make_args(args, passphrase)).encode(self._encoding))
         log.debug("Sending command to GnuPG process:%s%s" % (os.linesep, cmd))
 
         if platform.system() == "Windows":
